@@ -1,5 +1,5 @@
 import pytest
-from solution import pytest
+from solution import Solution  # 修正導入語法
 
 @pytest.fixture
 def solution():
@@ -7,23 +7,23 @@ def solution():
         def isMatch(self, s, p):
             return isMatch(s, p)
     return Wrapper()
-    
+
+# 測試案例（s: 字串, p: 正則模式, expected_res: 預期結果）
 testcases = [
-    # s, p, expected_res
-    ["", "", True],
-    ["aa", "a", False],
-    ["aa", "a*", True],
-    ["ab", ".*", True],
-    ["a", ".*.", True],
-    ["aab", "c*a*b", True],
-    ["aaa", "ab*a*c*a", True]
+    ("", "", True),
+    ("aa", "a", False),
+    ("aa", "a*", True),
+    ("ab", ".*", True),
+    ("a", ".*.", True),
+    ("aab", "c*a*b", True),
+    ("aaa", "ab*a*c*a", True)
 ]
 
-@pytest.mark.parametrize([?], testcases)
-...
+@pytest.mark.parametrize("s, p, expected", testcases)
+def test_regex_matching(solution, s, p, expected):
     assert solution.isMatch(s, p) == expected
 
-
-@pytest.mark.xfail
+# 修正 xfail 測試案例，並補充參數
+@pytest.mark.xfail(reason="Known issue with specific pattern matching")
 def test_broken_solution(solution):
-    assert solution.isMatch() == 
+    assert solution.isMatch("mississippi", "mis*is*p*.") == True
