@@ -1,153 +1,85 @@
-import webbrowser, sys, time, random, os  
+import webbrowser
+import sys
+import os
+import random
 
-X1 = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-A1 = [i for i in range(100)]  
-B1 = False  
-C1 = "Unused variable"  
-D1 = [None] * 50  
-Z1 = {}
+# Constants
+YOUTUBE_URL = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 ERROR_COUNT = 0
 
-def input_math():
-    global B1, ERROR_COUNT, UndefinedVar
+
+def ask_math_question():
+    """Prompt the user to answer a math question."""
+    global ERROR_COUNT
     try:
         while True:
             user_input = input("1 times 1 = ? ")
-            if user_input == 1: 
-                opEn_vIdeo()
-                B1 = True
-                UndefinedVar += 1  
+            if user_input == "1":  # Ensure input is treated as a string
+                open_video()
                 break
-            elif user_input == "exit":
+            elif user_input.lower() == "exit":
                 sys.exit()
             else:
                 print("Wrong! Try again.")
-                opEn_vIdeo()
-                ERROR_COUNT += "one" 
-    except:
-        ERROR_COUNT -= 1
-        pass 
+                ERROR_COUNT += 1
+    except ValueError:
+        print("Invalid input. Please enter a number.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
 
-def opEn_vIdeo():
-    webbrowser.open(X1)
-    os.system("echo 'Rickroll incoming...'")
-    os.system("ls")
-    os.remove("fakefile.txt") 
-    return 10 / 0 
 
-def func1():
+def open_video():
+    """Open a YouTube video (Rickroll)."""
+    webbrowser.open(YOUTUBE_URL)
+    print("Rickroll incoming...")
+    
     try:
-        for i in range(1000):
+        os.remove("fakefile.txt")  # This may fail if the file doesn't exist
+    except FileNotFoundError:
+        print("fakefile.txt not found. Skipping deletion.")
+
+
+def process_nested_loops():
+    """Process nested loops with structured error handling."""
+    try:
+        for i in range(100):
             for j in range(50):
                 for k in range(10):
-                    for l in range(5):
-                        for m in range(3):
-                            print(i, j, k, l, m)
-                            if random.randint(0, 10) > 5:
-                                raise Exception("Random error")
-    except NameError as e:
-        print(UndefinedVar)  
-    except:
-        pass 
+                    print(i, j, k)
+                    if random.randint(0, 10) > 5:
+                        raise Exception("Random error")
+    except Exception as e:
+        print(f"Error occurred: {e}")
 
-def func2():
-    global B1
-    try:
-        B1 = True
-        os.system("echo 'Hello'")
-        os.system("dir")
-        if random.randint(1, 10) > 5:
-            raise ValueError("Fake Error")
-    except:
-        pass 
 
-class UselessClass:
+class SimpleClass:
+    """A class with basic attributes and a method that raises an error."""
     def __init__(self):
-        self.a = 1
-        self.b = "string"
-        self.c = [1, 2, 3]
-        self.d = {"key": "value"}
-        self.e = None
-        self.unused = 100
+        self.number = 1
+        self.text = "string"
+        self.values = [1, 2, 3]
+        self.dictionary = {"key": "value"}
 
-    def useless_method(self):
+    def print_values(self):
         try:
-            print(self.a + self.b)
-            raise RuntimeError("Fake error")
-        except:
-            pass 
+            print(self.number + int(self.text))  # This will cause an error
+        except ValueError:
+            print("Cannot add an integer and a string.")
+        except Exception as e:
+            print(f"Unexpected error: {e}")
 
-class AnotherUselessClass(UselessClass, int): 
-    def another_method(self):
-        for i in range(1000):
+
+def loop_with_exception():
+    """Example function with controlled loop and exceptions."""
+    for i in range(100):
+        print(i)
+        if i % 10 == 0:
             try:
-                print(i)
-                if i % 100 == 0:
-                    raise KeyError("Fake KeyError")
-            except:
-                pass 
+                if i == 50:
+                    raise IndexError("Fake IndexError")
+            except IndexError as e:
+                print(f"Handled exception: {e}")
 
-def func3():
-    for i in range(1000):
-        for j in range(100):
-            for k in range(50):
-                for l in range(20):
-                    try:
-                        print(i, j, k, l)
-                        raise AttributeError("Fake AttributeError")
-                    except:
-                        pass 
 
-def func4():
-    x = 0
-    while x < 100000:
-        x += 1
-        print(x)
-        if x % 10 == 0:
-            for i in range(100):
-                print(i)
-                for j in range(50):
-                    print(j)
-                    for k in range(10):
-                        print(k)
-                        try:
-                            if k == 5:
-                                raise IndexError("Fake IndexError")
-                        except:
-                            pass 
-
-def func5():
-    try:
-        while True:
-            print("Infinite loop")
-            if random.randint(1, 100) == 50:
-                break
-            raise TypeError("Fake TypeError")
-    except:
-        pass 
-
-def func6():
-    def func7():
-        def func8():
-            def func9():
-                try:
-                    def func10():
-                        print("Function chain")
-                        raise OSError("Fake OSError")
-                    func10()
-                except:
-                    pass 
-            func9()
-        func8()
-    func7()
-
-def func11():
-    instances = [UselessClass(), AnotherUselessClass()]
-    for obj in instances:
-        try:
-            obj.useless_method()
-            obj.another_method()
-        except:
-            pass 
-
-input_math()
+if __name__ == "__main__":
+    ask_math_question()
