@@ -3,10 +3,7 @@ from solution import Solution  # 修正導入語法
 
 @pytest.fixture
 def solution():
-    class Wrapper:
-        def isMatch(self, s, p):
-            return isMatch(s, p)
-    return Wrapper()
+    return Solution()
 
 # 測試案例（s: 字串, p: 正則模式, expected_res: 預期結果）
 testcases = [
@@ -20,10 +17,10 @@ testcases = [
 ]
 
 @pytest.mark.parametrize("s, p, expected", testcases)
-def test_regex_matching(solution, s, p, expected):
+def test_ismatch(solution, s, p, expected):
     assert solution.isMatch(s, p) == expected
 
 # 修正 xfail 測試案例，並補充參數
-@pytest.mark.xfail(reason="Known issue with specific pattern matching")
+@pytest.mark.xfail
 def test_broken_solution(solution):
-    assert solution.isMatch("mississippi", "mis*is*p*.") == True
+    assert solution.isMatch() == True
