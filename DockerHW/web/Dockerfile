@@ -5,7 +5,7 @@ FROM python:3.11-slim
 WORKDIR /web
 
 # Copy files into the container
-COPY ./web
+COPY . /web
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
